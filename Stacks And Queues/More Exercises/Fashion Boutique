@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _05.FashionBoutique
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] clothesInBox = Console.ReadLine()
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+
+            Stack<int> stack = new Stack<int>(clothesInBox);
+            int racks = 1;
+            int sum = 0;
+
+            int capacity = int.Parse(Console.ReadLine());
+
+            while (stack.Count > 0)
+            {
+                if (stack.Peek() + sum > capacity)
+                {
+                    racks++;
+                    sum = stack.Pop();
+                }
+                else if (stack.Peek() + sum == capacity)
+                {
+                    stack.Pop();
+                    sum = 0;
+                    if (stack.Count > 0)
+                    {
+                        racks++;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    
+                }
+                else
+                {
+                    sum += stack.Pop();
+                }
+            }
+
+            Console.WriteLine(racks);
+        }
+    }
+}
