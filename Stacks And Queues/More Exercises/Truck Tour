@@ -1,0 +1,56 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _07.TruckTour2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int numberOfPumps = int.Parse(Console.ReadLine());
+            Queue<string> circle = new Queue<string>();
+            int firstGasPumpIndex = 0;
+            bool setFirstGasPump = false;
+
+            for (int i = 0; i < numberOfPumps; i++)
+            {
+                string info = Console.ReadLine();
+                circle.Enqueue(info);
+            }
+
+            int totalGasoline = 0;
+
+            for (int i = 0; i < numberOfPumps; i++)
+            {
+                var tokens = circle.Peek().Split().Select(int.Parse).ToArray();
+
+                if (tokens[0] >= tokens[1] && !setFirstGasPump)
+                {
+                    firstGasPumpIndex = i;
+                    setFirstGasPump = true;
+                }
+
+                var splitted = circle.Peek().Split().Select(int.Parse).ToArray();
+
+                var gasoline = splitted[0];
+                var kilometers = splitted[1];
+
+                if (gasoline < kilometers && totalGasoline < kilometers)
+                {
+                    circle.Enqueue(circle.Dequeue());
+                    i = -1;
+                    totalGasoline = 0;
+                }
+                else
+                {
+                    totalGasoline += gasoline;
+                    totalGasoline -= kilometers;
+                    circle.Dequeue();
+                }
+            }
+
+            Console.WriteLine(firstGasPumpIndex);
+         }
+    }
+}
