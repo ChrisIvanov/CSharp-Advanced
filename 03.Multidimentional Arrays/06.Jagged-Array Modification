@@ -1,0 +1,77 @@
+using System;
+using System.Linq;
+
+namespace _06.Jagged_ArrayModification
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int numRows = int.Parse(Console.ReadLine());
+            int[,] matrix = new int[numRows, numRows];
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                int[] rowDetails = Console.ReadLine().Split(" ")
+                        .Select(int.Parse).ToArray();
+
+                for (int col = 0; col < rowDetails.Length; col++)
+                {
+                    matrix[row, col] = rowDetails[col];
+                }
+            }
+
+            string[] input = Console.ReadLine().Split(" ");
+
+            while (input[0] != "END")
+            {
+                string command = input[0];
+                int comRow = int.Parse(input[1]);
+                int comCol = int.Parse(input[2]);
+                int comValue = int.Parse(input[3]);
+
+                switch (command)
+                {
+                    case "Add":
+                        if (comRow >= 0 && comCol >= 0
+                            && comRow < numRows && comCol < numRows)
+                        {
+                            matrix[comRow, comCol] += comValue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid coordinates");
+                        }
+                        break;
+
+                    case "Subtract":
+                        if (comRow >= 0 && comCol >= 0
+                            && comRow < numRows && comCol < numRows)
+                        {
+                            matrix[comRow, comCol] -= comValue;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid coordinates");
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                input = Console.ReadLine().Split(" ");
+            }
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                for (int col = 0; col < matrix.GetLength(1); col++)
+                {
+                    Console.Write(matrix[row, col] + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+    }
+}
