@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+
+namespace _10.Crossroads
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int greenLightLenght = int.Parse(Console.ReadLine());
+            int freeWidowLenght = int.Parse(Console.ReadLine());
+
+            Queue<string> inputQueue = new Queue<string>();
+            Queue<char> currentCarQueue = new Queue<char>();
+
+            int timeLeftCurr = greenLightLenght;
+            int freeWindowCurr = freeWidowLenght;
+            bool isCrashed = false;
+            int passedCarsCounter = 0;
+
+            string input = Console.ReadLine();
+
+            while (input != "END")
+            {
+                if (input != "green")
+                {
+                    inputQueue.Enqueue(input);
+                }
+                else
+                {
+                    while (timeLeftCurr > 0 && inputQueue.Count > 0)
+                    {
+                        string currCar = inputQueue.Peek();
+                        int carLength = currCar.Length;
+
+                        if (carLength <= timeLeftCurr)        // Case - car passes
+                        {
+                            timeLeftCurr -= carLength;
+                            inputQueue.Dequeue();
+                            passedCarsCounter++;
+                        }
+                        else                                  // Case - car is still on the crossroads after the free window time started
+                        {
+                            foreach (var item in currCar)
+                            {
+                                currentCarQueue.Enqueue(item);
+                            }
+
+                            carLength -= timeLeftCurr;
+                            
+                            for (int i = 0; i < timeLeftCurr; i++)
+                            {
+                                currentCarQueue.Dequeue();
+                            }
+
+                            timeLeftCurr = 0;
+
+                            if (carLength <= freeWindowCurr) // Case - the current car passes the crossroads on a free window
+                            {
+                                freeWindowCurr -= carLength;
+                                inputQueue.Dequeue();
+                                passedCarsCounter++;
+                            }
+                            else                            // Case - a crash occurs
+                            {
+                                for (int i = 0; i < freeWindowCurr; i++)
+                                {
+                                    currentCarQueue.Dequeue();
+                                }
+                                
+                                isCrashed = true;
+                                Console.WriteLine("A crash happened!");
+                                Console.WriteLine($"{currCar} was hit at {currentCarQueue.Peek()}.");
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (isCrashed)
+                {
+                    break;
+                }
+
+                timeLeftCurr = greenLightLenght;
+                freeWindowCurr = freeWidowLenght;
+                input = Console.ReadLine();
+            }
+
+            if (!isCrashed)
+            {
+                Console.WriteLine("Everyone is safe.");
+                Console.WriteLine($"{passedCarsCounter} total cars passed the crossroads.");
+            }
+        }
+    }
+}
