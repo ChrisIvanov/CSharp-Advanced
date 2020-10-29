@@ -1,0 +1,56 @@
+using System;
+using System.Linq;
+
+namespace _04.SymbolInMatrix
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int matrixSize = int.Parse(Console.ReadLine());
+
+            string[,] matrix = new string[matrixSize, matrixSize];
+
+            for (int row = 0; row < matrixSize; row++)
+            {
+                string input = Console.ReadLine();
+                string[] rowData = new string[matrixSize];
+                for (int i = 0; i < rowData.Length; i++)
+                {
+                    rowData[i] = input[i].ToString(); 
+                }
+
+                for (int col = 0; col < matrixSize; col++)
+                {
+                    matrix[row, col] = rowData[col];
+                }
+            }
+
+            string symbol = Console.ReadLine();
+            bool isContained = false;
+            for (int row = 0; row < matrixSize; row++)
+            {
+                for (int col = 0; col < matrixSize; col++)
+                {
+                    if (matrix[row, col] == symbol)
+                    {
+                        Console.WriteLine($"({row}, {col})");
+                        isContained = true;
+                        break;
+                    }
+
+                }
+
+                if (isContained)
+                {
+                    break;
+                }
+            }
+
+            if (!isContained)
+            {
+                Console.WriteLine($"{symbol} does not occur in the matrix");
+            }
+        }
+    }
+}
