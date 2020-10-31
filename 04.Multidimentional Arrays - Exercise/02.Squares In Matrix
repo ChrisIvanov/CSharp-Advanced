@@ -1,0 +1,45 @@
+using System;
+using System.Linq;
+
+namespace _02._2x2SquaresInMatrix
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] dimentions = Console.ReadLine().Split(" ",StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+
+            char[,] matrix = new char[dimentions[0], dimentions[1]];
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                char[] rowDetails = Console.ReadLine().Split(" ",StringSplitOptions.RemoveEmptyEntries).Select(char.Parse).ToArray();
+
+                for (int col = 0; col < matrix.GetLength(1); col++)
+                {
+                    matrix[row, col] = rowDetails[col];
+                }
+            }
+
+            int numSquareMatrices = 0;
+
+            for (int rows = 0; rows < matrix.GetLength(0) - 1; rows++)
+            {
+                for (int cols = 0; cols < matrix.GetLength(1) - 1; cols++)
+                {
+                    char currChar = matrix[rows, cols];
+                    char neighbouringCharRight = matrix[rows, cols + 1];
+                    char neighbouringCharDown = matrix[rows + 1, cols];
+                    char neighbouringCharRightDown = matrix[rows + 1, cols + 1];
+
+                    if (currChar == neighbouringCharRight && currChar == neighbouringCharDown && currChar == neighbouringCharRightDown)
+                    {
+                        numSquareMatrices++;
+                    }
+                }
+            }
+
+            Console.WriteLine(numSquareMatrices);
+        }
+    }
+}
