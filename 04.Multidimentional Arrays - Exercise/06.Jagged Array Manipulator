@@ -1,0 +1,96 @@
+using System;
+using System.Linq;
+
+namespace _06.JaggedArrayManipulator
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int numRows = int.Parse(Console.ReadLine());
+
+            int[][] jaggedMatrix = new int[numRows][];
+
+            for (int fillRow = 0; fillRow < jaggedMatrix.GetLength(0); fillRow++)
+            {
+                int[] rowDetails = Console.ReadLine().Split(" ")
+                    .Select(int.Parse).ToArray();
+                jaggedMatrix[fillRow] = new int[rowDetails.Length];
+
+                for (int fillCol = 0; fillCol < rowDetails.Length; fillCol++)
+                {
+                    jaggedMatrix[fillRow][fillCol] = rowDetails[fillCol];
+                }
+            }
+
+            for (int rowLength = 0; rowLength < jaggedMatrix.GetLength(0) - 1; rowLength++)
+            {
+                if (jaggedMatrix[rowLength].Length
+                    == jaggedMatrix[rowLength + 1].Length)
+                {
+                    for (int cols = 0; cols < jaggedMatrix[rowLength].Length; cols++)
+                    {
+                        jaggedMatrix[rowLength][cols] *= 2;
+                        jaggedMatrix[rowLength + 1][cols] *= 2;
+                    } 
+                }
+                else
+                {
+                    for (int colLength = 0; colLength < jaggedMatrix[rowLength].Length; colLength++) 
+                    {
+                        jaggedMatrix[rowLength][colLength] /= 2;
+                    }
+
+                    for (int colLength = 0; colLength < jaggedMatrix[rowLength + 1].Length; colLength++)
+                    {
+                        jaggedMatrix[rowLength + 1][colLength] /= 2;
+                    }
+                }
+            }
+
+            string[] input = Console.ReadLine().Split(" ").ToArray();
+
+            while (input[0] != "End")
+            {
+                string command = input[0];
+                int row = int.Parse(input[1]);
+                int col = int.Parse(input[2]);
+                int value = int.Parse(input[3]);
+
+                switch (command)
+                {
+                    case "Add":
+                        if (row >= 0 && row < jaggedMatrix.GetLength(0)
+                            && col >= 0 && col < jaggedMatrix[row].Length)
+                        {
+                            jaggedMatrix[row][col] += value;
+                        }
+                        break;
+
+                    case "Subtract":
+                        if (row >= 0 && row < jaggedMatrix.GetLength(0)
+                            && col >= 0 && col < jaggedMatrix[row].Length)
+                        {
+                            jaggedMatrix[row][col] -= value;
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                input = Console.ReadLine().Split(" ").ToArray();
+            }
+
+            for (int printRow = 0; printRow < jaggedMatrix.GetLength(0); printRow++)
+            {
+                for (int printCol = 0; printCol < jaggedMatrix[printRow].Length; printCol++)
+                {
+                    Console.Write(jaggedMatrix[printRow][printCol] + " ");
+                }
+
+                Console.WriteLine();
+            }
+        }
+    }
+}
