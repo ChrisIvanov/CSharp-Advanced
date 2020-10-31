@@ -1,0 +1,133 @@
+using System;
+
+namespace _07.KnightGame
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int dimentions = int.Parse(Console.ReadLine());
+
+            int[,] chessBoard = new int[dimentions, dimentions];
+
+            for (int fillRows = 0; fillRows < chessBoard.GetLength(0); fillRows++)
+            {
+                string rowData = Console.ReadLine();
+
+                for (int fillCols = 0; fillCols < chessBoard.GetLength(1); fillCols++)
+                {
+                    chessBoard[fillRows, fillCols] = rowData[fillCols];
+                }
+            }
+
+            int attackCounter = 0;
+            int removeCounter = 0;
+            
+            int[] maxAttackKnightCoor = new int[2];
+            bool isClear = false;
+
+            while (!isClear)
+            {
+                int maxAttackCounter = 0;
+
+                for (int row = 0; row < chessBoard.GetLength(0); row++)
+                {
+                    for (int col = 0; col < chessBoard.GetLength(1); col++)
+                    {
+                        if (chessBoard[row, col] == 'K')
+                        {
+
+                            if (row - 2 >= 0 && col - 1 >= 0)
+                            {
+                                if (chessBoard[row - 2, col - 1] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row - 2 >= 0 && col + 1 < chessBoard.GetLength(1))
+                            {
+                                if (chessBoard[row - 2, col + 1] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row - 1 >= 0 && col + 2 < chessBoard.GetLength(1))
+                            {
+                                if (chessBoard[row - 1, col + 2] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row - 1 >= 0 && col - 2 >= 0)
+                            {
+                                if (chessBoard[row - 1, col - 2] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row + 1 < chessBoard.GetLength(0) && col + 2 < chessBoard.GetLength(1))
+                            {
+                                if (chessBoard[row + 1, col + 2] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row + 1 < chessBoard.GetLength(0) && col - 2 >= 0)
+                            {
+                                if (chessBoard[row + 1, col - 2] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row + 2 < chessBoard.GetLength(0) && col + 1 < chessBoard.GetLength(1))
+                            {
+                                if (chessBoard[row + 2, col + 1] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+
+                            if (row + 2 < chessBoard.GetLength(0) && col - 1 >= 0)
+                            {
+                                if (chessBoard[row + 2, col - 1] == 'K')
+                                {
+                                    attackCounter++;
+                                }
+                            }
+                        }
+
+                        if (attackCounter > maxAttackCounter)
+                        {
+                            maxAttackCounter = attackCounter;
+                            maxAttackKnightCoor[0] = row;
+                            maxAttackKnightCoor[1] = col;
+                        }
+
+                        attackCounter = 0;
+                    }
+                }
+
+                if (maxAttackCounter > 0)
+                {
+                    chessBoard[maxAttackKnightCoor[0], maxAttackKnightCoor[1]] = '0';
+                    removeCounter++;
+                }
+
+                if (maxAttackCounter == 0)
+                {
+                    isClear = true;
+                }
+            }
+
+            Console.WriteLine(removeCounter);
+        }
+    }
+}
+
+
