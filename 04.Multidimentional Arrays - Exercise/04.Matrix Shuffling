@@ -1,0 +1,77 @@
+using System;
+using System.Linq;
+
+namespace _04.MatrixShuffling
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int[] dimentions = Console.ReadLine()
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .Select(int.Parse)
+                .ToArray();
+
+            string[,] matrix = new string[dimentions[0],dimentions[1]];
+
+            for (int row = 0; row < matrix.GetLength(0); row++)
+            {
+                string[] rowDetails = Console.ReadLine()
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .ToArray();
+
+                for (int col = 0; col < matrix.GetLength(1); col++)
+                {
+                    matrix[row, col] = rowDetails[col];
+                }
+            }
+
+            string[] input = Console.ReadLine()
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .ToArray();
+
+            while (input[0] != "END")
+            {
+                if (input[0] == "swap")
+                {
+                    int firstRow = int.Parse(input[1]);
+                    int firstCol = int.Parse(input[2]);
+                    int secondRow = int.Parse(input[3]);
+                    int secondCol = int.Parse(input[4]);
+
+                    if (firstRow >= 0 && firstRow < matrix.GetLength(0)
+                        && firstCol >= 0 && firstCol < matrix.GetLength(1)
+                        && secondRow >= 0 && secondRow < matrix.GetLength(0)
+                        && secondCol >= 0 && secondCol < matrix.GetLength(1))
+                    {
+                        string temp = matrix[firstRow, firstCol];
+                        matrix[firstRow, firstCol] = matrix[secondRow, secondCol];
+                        matrix[secondRow, secondCol] = temp;
+
+                        for (int rows = 0; rows < matrix.GetLength(0); rows++)
+                        {
+                            for (int cols = 0; cols < matrix.GetLength(1); cols++)
+                            {
+                                Console.Write(matrix[rows,cols] + " ");
+                            }
+
+                            Console.WriteLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input!");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input!");
+                }
+
+                input = Console.ReadLine()
+                .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .ToArray(); 
+            }
+        }
+    }
+}
