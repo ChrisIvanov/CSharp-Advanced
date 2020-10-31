@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+
+namespace _07.SoftUni_Party
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            HashSet<string> reservationNumbers = new HashSet<string>(8);
+
+            var input = Console.ReadLine();
+            bool isParty = false;
+            while (input != "END")
+            {
+                reservationNumbers.Add(input);
+
+                if (input == "PARTY" || isParty)
+                {
+                    isParty = true;
+                    reservationNumbers.Remove(input);
+                }
+
+                input = Console.ReadLine();
+            }
+
+            Console.WriteLine(reservationNumbers.Count);
+
+            foreach (var item in reservationNumbers)
+            {
+                if (Char.IsDigit(item[0]))
+                {
+                    Console.WriteLine(item);
+                }
+            }
+
+            foreach (var item in reservationNumbers)
+            {
+                if (!Char.IsDigit(item[0]))
+                {
+                    Console.WriteLine(item);
+                }
+            }
+        }
+    }
+}
