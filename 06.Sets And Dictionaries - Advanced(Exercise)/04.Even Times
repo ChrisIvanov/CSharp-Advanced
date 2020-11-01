@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _04.EvenTimes
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<int, int> occurences = new Dictionary<int, int>();
+
+            int n = int.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                int currentNum = int.Parse(Console.ReadLine());
+
+                if (!occurences.ContainsKey(currentNum))
+                {
+                    occurences.Add(currentNum, 0);
+                }
+
+                occurences[currentNum]++;
+            }
+
+            var num = occurences.Where(x => x.Value % 2 == 0).FirstOrDefault().Key;
+
+            Console.WriteLine(num);
+        }
+    }
+}
