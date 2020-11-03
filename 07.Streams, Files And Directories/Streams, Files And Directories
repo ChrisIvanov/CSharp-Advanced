@@ -1,0 +1,29 @@
+using System;
+using System.IO;
+
+namespace Streams__Files_And_Directories
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            StreamReader reader = new StreamReader("../../../input.txt ");
+            var student = reader.ReadLine();
+            
+            while (student != -1)
+            {
+                Console.WriteLine(student);
+                student = reader.ReadLine();
+            }
+            reader.Close();
+            Console.ReadLine();
+
+
+            StreamWriter writer = new StreamWriter($"../../../students{0 + 1}.txt");
+            writer.Write("Changed!");
+            writer.Write("First student!!!");
+            writer.WriteLine("Second student!!");
+            writer.Close();
+        }
+    }
+}
