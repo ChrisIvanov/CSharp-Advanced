@@ -1,0 +1,29 @@
+using System;
+using System.IO;
+
+namespace StreamsDemo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            using (FileStream stream
+                = new FileStream("../../../input.txt", FileMode.OpenOrCreate))
+            {
+                Console.WriteLine($"File length: {stream.Length}");
+                byte[] fullFile = new byte[100];
+                stream.Read(fullFile, 0, 100);
+                Console.WriteLine($"Stream Position: {stream.Position}");
+                stream.Read(fullFile, 0, 3);
+                Console.WriteLine($"Stream Position: {stream.Position}");
+                stream.Read(fullFile, 3, 3);
+                Console.WriteLine($"Stream Position: {stream.Position}");
+                stream.Read(fullFile, 6, 3);
+                Console.WriteLine($"Stream Position: {stream.Position}");
+
+                Console.WriteLine(String.Join(" ", fullFile));
+            }
+
+        }
+    }
+}
