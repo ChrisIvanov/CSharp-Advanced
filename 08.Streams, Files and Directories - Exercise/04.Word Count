@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace _03.WordCount
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Dictionary<string, int> wordsOccurance = new Dictionary<string, int>();
+
+            using (StreamReader textToRead = new StreamReader("../../../text.txt"))
+            {
+                using (StreamWriter writer = new StreamWriter("../../../actualResult.txt"))
+                {
+                    var text = File.ReadAllText("../../../text.txt")
+                        .Split(' ', '-', ',', '.', '?', '!').ToArray();
+                    var words = File.ReadAllLines("../../../words.txt");
+
+                    foreach (var word in words)
+                    {
+                        wordsOccurance.Add(word, 0);
+                    }
+
+                    for (int i = 0; i < text.Length; i++)
+                    {
+                        for (int j = 0; j < words.Length; j++)
+                        {
+                            text[i] = text[i].ToLower();
+                            if (text[i] == words[j])
+                            {
+                                if (wordsOccurance.ContainsKey(words[j]))
+                                {
+                                    wordsOccurance[words[j]]++;
+                                }
+                            }
+                        }
+                    }
+
+                    foreach (var word in wordsOccurance)
+                    {
+                        writer.WriteLine($"{word.Key} - {word.Value}");
+                    }
+                }
+            }
+            var ordered = wordsOccurance.OrderByDescending(x => x.Value);
+
+            using (StreamWriter orderedResult = new StreamWriter("../../../actualResult.txt"))
+            {
+                foreach (var item in ordered)
+                {
+                    orderedResult.WriteLine($"{item.Key} - {item.Value}");
+                }
+            }
+        }
+    }
+}
