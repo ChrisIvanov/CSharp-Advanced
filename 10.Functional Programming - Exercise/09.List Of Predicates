@@ -1,0 +1,47 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _09.ListOfPredicates
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int n = int.Parse(Console.ReadLine());
+
+            int[] dividers = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+            List<int> result = new List<int>();
+            PossibleDivisers(n, dividers, result);
+
+            Console.Write(String.Join(" ", result));
+        }
+
+        static int[] PossibleDivisers(int n, int[] dividers, List<int> result)
+        {
+            bool isViable = false;
+            for (int num = 1; num <= n; num++)
+            {
+                for (int i = 0; i < dividers.Length; i++)
+                {
+                    if (num % dividers[i] == 0)
+                    {
+                        isViable = true;
+                    }
+                    else
+                    {
+                        isViable = false;
+                        break;
+                    }
+                }
+
+                if (isViable)
+                {
+                    result.Add(num);
+                }
+            }
+
+            return result.ToArray();
+        }
+    }
+}
