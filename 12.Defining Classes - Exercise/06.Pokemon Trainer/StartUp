@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace _09.PokemonTrainer
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] command = Console.ReadLine().Split(" ").ToArray();
+            List<Trainer> trainerInfo = new List<Trainer>();
+
+            while (command[0] != "Tournament")
+            {
+                string trainerName = command[0];
+                string pokemonName = command[1];
+                string pokemonElement = command[2];
+                int pokemonHealth = int.Parse(command[3]);
+                
+                Pokemon pokemon = new Pokemon(pokemonName, pokemonElement, pokemonHealth);
+                Trainer trainer = new Trainer(trainerName, pokemon);
+                trainerInfo.Add(trainer);
+
+                command = Console.ReadLine().Split(" ").ToArray();
+            }
+
+            Dictionary<string, Dictionary<int, int>> newDictionary = new Dictionary<string, Dictionary<int, int>>();
+
+            foreach (var trainer in trainerInfo)
+            {
+                if (!newDictionary.ContainsKey(trainer.Name))
+                {
+                    newDictionary.Add(trainer.Name, new Dictionary<int, int>
+                    {
+                        { trainer.NumberOfBadges, trainer.Collection.Health}
+                    });
+                }
+                else
+                {
+                    newDictionary[trainer.Name].Add(trainer.NumberOfBadges, trainer.Collection.Health);
+                }
+            }
+
+            string secondCommand = Console.ReadLine();
+
+            while (secondCommand != "End")
+            {
+                foreach (var trainer in trainerInfo)
+                {
+                    if (trainer.Collection.Element == secondCommand)
+                    {
+                        
+                    }
+                    else
+                    {
+                        trainer.Collection.Health -= 10;
+                        if (trainer.Collection.Health <= 0)
+                        {
+                            
+                        } 
+                    }
+                }
+
+                secondCommand = Console.ReadLine();
+            }
+
+            var ordered = trainerInfo.OrderByDescending(x => x.NumberOfBadges);
+            foreach (var trainer in ordered)
+            {
+                Console.WriteLine($"{trainer.Name} {trainer.NumberOfBadges} {trainer.Collection}");
+            }
+        }
+    }
+}
