@@ -1,0 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace _09.PokemonTrainer
+{
+    public class Trainer
+    {
+        public Trainer(string name, Pokemon collection)
+        {
+            Name = name;
+            NumberOfBadges = 0;
+            Collection = collection;
+        }
+        public string Name { get; set; }
+
+        public int NumberOfBadges { get; set; }
+
+        public Pokemon Collection { get; set; }
+    }
+}
