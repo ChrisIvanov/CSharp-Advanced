@@ -1,0 +1,37 @@
+using System;
+
+namespace Demo
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var operation = new Operations<int>();
+            Console.WriteLine(operation.AreEqual(5, 6));
+            operation.First = 6;
+
+            var stringOperation = new Operations<string>();
+            stringOperation.First = "shest";
+            Console.WriteLine(stringOperation.ToStringResult("hop","trop"));
+        }
+
+        class Operations<T>
+        {
+
+            public T First { get; set; }
+
+            public T Second { get; set; }
+
+
+            public bool AreEqual(T first, T second)
+            {
+                return first.Equals(second);
+            }
+
+            public string ToStringResult(T first, T second)
+            {
+                return first.ToString() + second.ToString();
+            }
+        }
+    }
+}
