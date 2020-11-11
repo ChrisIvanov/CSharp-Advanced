@@ -1,0 +1,27 @@
+using System;
+using System.Collections.Generic;
+
+namespace Implement_The_CustomStack_Class
+{
+    public class StartUp
+    {
+        public static void Main(string[] args)
+        {
+            CustomList myCustomList = new CustomList();
+            List<int> list = new List<int>();
+            for (int i = 1; i < 4; i++)
+            {
+                myCustomList.Add(i);
+            }
+            list.Insert(1, 4);
+            myCustomList.Insert(1, 6);
+            myCustomList.RemoveAt(1);
+
+            Console.WriteLine(myCustomList.Contains(3));
+            Console.WriteLine(myCustomList.Contains(6));
+
+            myCustomList.Swap(0, 2);
+        }
+
+    }
+}
