@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+
+namespace GenericCountMethodString
+{
+    class StatUp
+    {
+        static void Main()
+        {
+            int numberOfEntries = int.Parse(Console.ReadLine());
+
+            List<string> values = new List<string>();
+
+            for (int i = 0; i < numberOfEntries; i++)
+            {
+                string currentValue = Console.ReadLine();
+
+                values.Add(currentValue);
+            }
+
+            string value = Console.ReadLine();
+
+            Box<string> box = new Box<string>(values);
+
+            int countOfGreaterValues = box.GetCountOfGreaterValue(value);
+
+            Console.WriteLine(countOfGreaterValues);
+        }
+    }
+}
